@@ -1,0 +1,12 @@
+enclave {
+    from "sgx_tstdc.edl" import *;
+    from "sgx_tcrypto.edl" import *;
+
+    trusted {
+        public void ecall_check_password([in, string] const char* password);
+    };
+
+    untrusted {
+        void ocall_print(const char* str);
+    };
+};
