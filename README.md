@@ -10,10 +10,10 @@ Enrollment: During first use, prompt the user to create a password within the en
 Authentication: For subsequent logins, prompt the user for the password outside the enclave. Derive the encryption key again from the entered password. Inside the enclave, attempt to decrypt the stored encrypted password using the derived key. Successful decryption signifies a correct password.
 
 # Architecture Diagram
-+---------------------+      +---------------------+      +---------------------------+
-|   User Application  | ---> |     SGX Enclave     | ---> |  Password Verification    |
-|                     |      |                     |      |   (Inside Enclave)        |
-| 1. Init Enclave     |      |  2. Store Password  |      |  3. Verify Password       |
-| 4. Send Password -> | ---> | 5. Receive Password | ---> |  6. Compare Password      |
-| 7. Receive Result <-| <--- | 8. Send Result      | <--- |  9. Return Result         |
-+---------------------+      +---------------------+      +---------------------------+
+The user application initializes the SGX enclave.
+The enclave securely stores the predefined password.
+The user inputs their password into the application.
+The application sends the input password to the enclave (ECALL).
+The enclave receives the password and performs the verification.
+The result of the verification is sent back to the application (OCALL).
+The application displays whether the password is correct or incorrect.
