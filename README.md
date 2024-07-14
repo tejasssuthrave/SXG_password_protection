@@ -8,3 +8,12 @@ Password Storage: Don't store passwords in plain text within the enclave. Derive
 User Interaction:
 Enrollment: During first use, prompt the user to create a password within the enclave. Derive the encryption key and store the encrypted password securely (e.g., sealed file).
 Authentication: For subsequent logins, prompt the user for the password outside the enclave. Derive the encryption key again from the entered password. Inside the enclave, attempt to decrypt the stored encrypted password using the derived key. Successful decryption signifies a correct password.
+
+# Architecture Diagram
++---------------------+      +---------------------+      +---------------------------+
+|   User Application  | ---> |     SGX Enclave     | ---> |  Password Verification    |
+|                     |      |                     |      |   (Inside Enclave)        |
+| 1. Init Enclave     |      |  2. Store Password  |      |  3. Verify Password       |
+| 4. Send Password -> | ---> | 5. Receive Password | ---> |  6. Compare Password      |
+| 7. Receive Result <-| <--- | 8. Send Result      | <--- |  9. Return Result         |
++---------------------+      +---------------------+      +---------------------------+
